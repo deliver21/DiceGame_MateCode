@@ -8,7 +8,11 @@
             {
                 var diceList = DiceParser.ParseDice(args);
                 var game = new Game(diceList);
-                game.Play();
+                game.Start();
+            }
+            catch(ArgumentException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
             }
             catch(Exception ex)
             {

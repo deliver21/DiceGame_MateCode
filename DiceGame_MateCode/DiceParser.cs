@@ -18,9 +18,10 @@ namespace DiceGame_MateCode
             var diceList= new List<Dice>();
             foreach( var arg in args)
             {
-                var values=arg.Split(',').Select(int.Parse).ToArray();
+                var values = arg.Split(',').Select(int.Parse).ToArray();
+
                 if (values.Length != 6)
-                    throw new ArgumentException($"Each die must have exactly 6 integers. Invalid input: {arg}");
+                    throw new ArgumentException($"Each dice must have exactly 6 integers. Invalid input: {arg}");
 
                 diceList.Add(new Dice(values));
             }

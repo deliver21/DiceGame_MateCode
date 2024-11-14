@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DiceGame;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,48 @@ namespace DiceGame_MateCode
     public class Game
     {
         private List<Dice> _diceList;
-        private Random _random = new Random();
         private HmacGenerator _hmacGen = new();
+        private readonly ProbabilityCalculator _probabilityCalculator;
 
         public Game(List<Dice> diceList)
         {
             _diceList = diceList;
+            _probabilityCalculator = new ProbabilityCalculator();
+        }
+
+        public void Start()
+        {
+            Console.WriteLine("Welcome to the Dice Game!");
+            Console.WriteLine("Type 'X' to exit, '?' for help.");
+
+            while (true)
+            {
+                Console.WriteLine("\nChoose an option:");
+                Console.WriteLine("0 - Play the game");
+                Console.WriteLine("? - Show probability table");
+                Console.WriteLine("X - Exit");
+
+                string input = Console.ReadLine()?.Trim().ToUpper();
+
+                switch (input)
+                {
+                    case "?":
+                        ShowProbabilityTable();
+                        break;
+
+                    case "0":
+                        Play();
+                        break;
+
+                    case "X":
+                        Console.WriteLine("Exiting game. Goodbye!");
+                        return;
+
+                    default:
+                        Console.WriteLine("Invalid option. Please enter '0', '?', or 'X'.");
+                        break;
+                }
+            }
         }
 
         public void Play()
@@ -41,6 +78,11 @@ namespace DiceGame_MateCode
             {
                 Console.WriteLine("I go first.");
             }
+        }
+
+        private void ShowProbabilityTable()
+        {
+            _probabilityCalculator.PrintProbabilityTable(_diceList);
         }
     }
 }
