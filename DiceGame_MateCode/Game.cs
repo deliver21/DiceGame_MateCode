@@ -35,7 +35,7 @@ namespace DiceGame_MateCode
             Console.WriteLine($"My selection: {computerChoice} (KEY={_hmacGen.RevealKey()})");
             if(userChoice == computerChoice)
             {
-                Console.WriteLine("You guessed it correctly! You go first")
+                Console.WriteLine("You guessed it correctly! You go first");
             }
             else
             {
