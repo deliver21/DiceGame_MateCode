@@ -12,7 +12,7 @@ namespace DiceGame_MateCode
         {
             if (args.Length < 3)
             {
-                throw new ArgumentException("You must provide at least 3 dice as input.");
+                throw new ArgumentException($"You must provide at least 3 dice as input. Invalid dice number {args.Length}");
             }
 
             var diceList = new List<Dice>();
