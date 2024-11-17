@@ -32,7 +32,7 @@ namespace DiceGame
                 Console.WriteLine();
             }
         }
-        //To be reviewed
+
         private double CalculateWinningProbability(Dice dice1, Dice dice2)
         {
             int wins = 0, losses = 0;
@@ -40,10 +40,8 @@ namespace DiceGame
             {
                 foreach (var roll2 in dice2.Values)
                 {
-                    if (roll1 > roll2)
-                        wins++;
-                    else if (roll1 < roll2)
-                        losses++;
+                    if (roll1 > roll2) wins++;
+                    else if (roll1 < roll2) losses++;
                 }
             }
             return (double)wins / (wins + losses);

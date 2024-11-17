@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace DiceGame_MateCode
 {
-    public class DiceParser
+    public static class DiceParser
     {
         public static List<Dice> ParseDice(string[] args)
         {
-            if(args.Length<3)
+            if (args.Length < 3)
             {
-                throw new ArgumentException("You must provide at least 3 dice attempt");
+                throw new ArgumentException("You must provide at least 3 dice as input.");
             }
 
-            var diceList= new List<Dice>();
-            foreach( var arg in args)
+            var diceList = new List<Dice>();
+            foreach (var arg in args)
             {
                 var values = arg.Split(',').Select(int.Parse).ToArray();
 

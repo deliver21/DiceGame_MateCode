@@ -10,19 +10,9 @@ namespace DiceGame_MateCode
     {
         public int[] Values { get; }
 
-        public Dice(int[] Values)
+        public Dice(int[] values)
         {
-            this.Values = Values;
-        }
-
-        public int Roll(Random random)
-        {
-            return Values[random.Next(Values.Length)];
-        }
-
-        public override string ToString()
-        {
-            return string.Join(",", Values);
+            Values = values;
         }
     }
 }
