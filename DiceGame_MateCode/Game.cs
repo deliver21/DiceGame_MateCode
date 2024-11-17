@@ -56,10 +56,9 @@ namespace DiceGame_MateCode
             if (input == "?")
             {
                 probability.PrintProbabilityTable(diceList);
-                Console.Write("Your selection : ");
-                input = Console.ReadLine();
+                GetUserGuess();
             }
-                if (input.ToUpper() == "X") Environment.Exit(0);
+            if (input.ToUpper() == "X") Environment.Exit(0);
             return int.TryParse(input, out int guess) && (guess == 0 || guess == 1) ? guess : -1;
         }
 
@@ -158,8 +157,7 @@ namespace DiceGame_MateCode
             if (input == "?")
             {
                 probability.PrintProbabilityTable(diceList);
-                Console.Write("Your selection : ");
-                input = Console.ReadLine();
+                GetUserInput(prompt, maxValidValue);
             }
             if (input.ToUpper() == "X") Environment.Exit(0);
             return int.TryParse(input, out int choice) && choice >= 0 && choice < maxValidValue ? choice : 0;
