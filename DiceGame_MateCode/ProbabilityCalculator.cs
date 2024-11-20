@@ -12,25 +12,60 @@ namespace DiceGame
         public void PrintProbabilityTable(List<Dice> diceList)
         {
             Console.WriteLine("\nProbability Table:");
-            Console.WriteLine("------------------------------");
+            Console.WriteLine("Probability of the win for the user:");
+
+            PrintTableBorder(diceList.Count);
+            PrintHeaderRow(diceList);
+            PrintTableBorder(diceList.Count);
 
             for (int i = 0; i < diceList.Count; i++)
             {
-                Console.Write($"Dice {i + 1}:  ");
-                for (int j = 0; j < diceList.Count; j++)
-                {
-                    if (i == j)
-                    {
-                        Console.Write("   -   ");
-                    }
-                    else
-                    {
-                        double probability = CalculateWinningProbability(diceList[i], diceList[j]);
-                        Console.Write($"{probability:P2} ");
-                    }
-                }
-                Console.WriteLine();
+                PrintRow(diceList, i);
+                PrintTableBorder(diceList.Count);
             }
+        }
+
+        private void PrintTableBorder(int diceCount)
+        {
+            Console.WriteLine(new string('+', diceCount * 14 + 15));
+        }
+
+        private void PrintHeaderRow(List<Dice> diceList)
+        {
+            Console.Write("| User dice v  ");
+            foreach (var dice in diceList)
+            {
+                Console.Write($"| {string.Join(",", dice.Values).PadRight(11)} ");
+            }
+            Console.WriteLine("|");
+        }
+
+        private void PrintRow(List<Dice> diceList, int rowIndex)
+        {
+            Console.Write($"| {string.Join(",", diceList[rowIndex].Values).PadRight(11)} ");
+            for (int j = 0; j < diceList.Count; j++)
+            {
+                if (rowIndex == j)
+                {
+                    PrintDiagonalElement();
+                }
+                else
+                {
+                    double probability = CalculateWinningProbability(diceList[rowIndex], diceList[j]);
+                    PrintProbability(probability);
+                }
+            }
+            Console.WriteLine("|");
+        }
+
+        private void PrintDiagonalElement()
+        {
+            Console.Write($"| {"- (0.3333)".PadRight(11)} ");
+        }
+
+        private void PrintProbability(double probability)
+        {
+            Console.Write($"| {probability:F4}      ");
         }
 
         private double CalculateWinningProbability(Dice dice1, Dice dice2)

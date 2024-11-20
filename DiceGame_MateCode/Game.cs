@@ -159,7 +159,7 @@ namespace DiceGame_MateCode
                 probability.PrintProbabilityTable(diceList);
                 GetUserInput(prompt, maxValidValue);
             }
-            if (input.ToUpper() == "X") Environment.Exit(0);
+            if (input?.ToUpper() == "X") Environment.Exit(0);
             return int.TryParse(input, out int choice) && choice >= 0 && choice < maxValidValue ? choice : 0;
         }
 
