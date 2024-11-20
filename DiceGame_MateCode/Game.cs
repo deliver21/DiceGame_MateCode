@@ -22,11 +22,19 @@ namespace DiceGame_MateCode
 
         public void Play()
         {
+            Dice playerDice , computerDice;
             int computerChoice = GenerateRandomChoice();
             bool playerGoesFirst = DetermineFirstMove(computerChoice);
-
-            Dice playerDice = SelectPlayerDice();
-            Dice computerDice = SelectComputerDice(playerDice);
+            if(playerGoesFirst)
+            {
+                playerDice = SelectPlayerDice(null);
+                computerDice = SelectComputerDice(playerDice);
+            }
+            else
+            {
+                computerDice = SelectComputerDice(null);
+                playerDice = SelectPlayerDice(computerDice);
+            }          
 
             PlayRound(playerDice, computerDice, playerGoesFirst);
         }
@@ -62,23 +70,35 @@ namespace DiceGame_MateCode
             return int.TryParse(input, out int guess) && (guess == 0 || guess == 1) ? guess : -1;
         }
 
-        private Dice SelectPlayerDice()
+        private Dice SelectPlayerDice(Dice excludedDice)
         {
             Console.WriteLine("Choose your dice:");
-            for (int i = 0; i < diceList.Count; i++)
+            var availableDice = excludedDice == null
+                ? diceList
+                : diceList.Where(d => d != excludedDice).ToList();
+
+            for (int i = 0; i < availableDice.Count; i++)
             {
-                Console.WriteLine($"{i} - {string.Join(",", diceList[i].Values)}");
+                Console.WriteLine($"{i} - {string.Join(",", availableDice[i].Values)}");
             }
 
-            int choice = GetUserInput("Your selection: ", diceList.Count);
-            Console.WriteLine($"You chose the dice: {string.Join(",", diceList[choice].Values)}");
-            return diceList[choice];
+            int choice = GetUserInput("Your selection: ", availableDice.Count);
+            Console.WriteLine($"You chose the dice: {string.Join(",", availableDice[choice].Values)}");
+            return availableDice[choice];
         }
 
-        private Dice SelectComputerDice(Dice playerDice)
+        private Dice SelectComputerDice(Dice excludedDice)
         {
-            Dice computerDice = diceList.First(d => d != playerDice);
-            Console.WriteLine($"I chose the dice: {string.Join(",", computerDice.Values)}");
+            int choice;
+            Dice computerDice;
+            do
+            {
+                choice = hmacGen.GenerateSecureRandom(diceList.Count);
+                computerDice = diceList[choice];
+                Console.WriteLine($"I chose the dice: {string.Join(",", computerDice.Values)}");
+            }
+            while (diceList[choice] == excludedDice);
+            
             return computerDice;
         }
 
